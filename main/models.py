@@ -43,10 +43,16 @@ class Categoria(models.Model):
     codigo = models.CharField(max_length=4)
     nombre = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.nombre
+
 class Localizacion(models.Model):
     distrito = models.CharField(max_length=20)
     provincia = models.CharField(max_length=20)
     departamento = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.distrito
 
 class Producto(models.Model):
     # Relaciones
@@ -68,8 +74,23 @@ class Producto(models.Model):
         codigo_producto = str(self.id).zfill(6)
         return f'{codigo_categoria}-{codigo_producto}'
 
+class ProductoImage(models.Model):
+    product = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to="products", null=True, blank=True)
+
+class Cliente(models.Model):
+    # Relacion con el modelo Perfil
+    user_profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+
+    # Atributos especificos del Cliente
+    preferencias = models.ManyToManyField(to='Categoria')
+
+    def __str__(self):
+        return f'Cliente: {self.user_profile.user.get_username()}'
+
 class Pedido(models.Model):
     # Relaciones
+    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
     repartidor = models.ForeignKey('Colaborador', on_delete=models.SET_NULL, null=True)
     ubicacion = models.ForeignKey('Localizacion', on_delete=models.SET_NULL, null=True)
 
@@ -78,13 +99,12 @@ class Pedido(models.Model):
     fecha_entrega = models.DateTimeField(blank=True, null=True)
     estado = models.CharField(max_length=3)
     direccion_entrega = models.CharField(max_length=100, blank=True, null=True)
-    repartidor=models.CharField(max_length=30)
     tarifa = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.cliente} - {self.fecha_creacion} - {self.estado}'
 
-    def calcular_tarifa(self):
+    def get_total(self):
         detalles = self.detallepedido_set.all()
         total = 0
         for detalle in detalles:
@@ -103,24 +123,13 @@ class DetallePedido(models.Model):
 
     # Atributos
     cantidad = models.IntegerField(blank=True, null=True)
-    subtotal= models.FloatField()
 
     def __str__(self):
         return f'{self.pedido.id} - {self.cantidad} x {self.producto.nombre}'
 
-    def calcular_subtotal(self):
-        a= self.producto.get_precio_final() * self.cantidad
-        self.subtotal=a
-        return self.subtotal
+    def get_subtotal(self):
+        return  self.producto.precio_final() * self.cantidad
 
-class Cliente(models.Model):
-    # Relacion con el modelo Perfil
-    user_profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
 
-    # Atributos especificos del Cliente
-    preferencias = models.ManyToManyField(to='Categoria')
-
-    def __str__(self):
-        return f'Cliente: {self.user_profile.user.get_username()}'
 
 
