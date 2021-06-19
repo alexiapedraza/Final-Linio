@@ -143,4 +143,4 @@ if 'ON_HEROKU' in os.environ:
     django_heroku.settings(locals())
     # Django Storages
     DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-    DROPBOX_OAUTH2_TOKEN = '[qGz2n3y2sEcAAAAAAAAAAfmYFzl6Ryc-Vh_9To5mAIFSQVNgZopGJy5I4jsAyTwi]'
+    DROPBOX_OAUTH2_TOKEN = 'qGz2n3y2sEcAAAAAAAAAAfmYFzl6Ryc-Vh_9To5mAIFSQVNgZopGJy5I4jsAyTwi'
