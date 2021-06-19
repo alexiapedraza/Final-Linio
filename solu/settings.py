@@ -136,11 +136,11 @@ EMAIL_PORT = '2525'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-#Django Storages
-DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-DROPBOX_OAUTH2_TOKEN = '[qGz2n3y2sEcAAAAAAAAAAfmYFzl6Ryc-Vh_9To5mAIFSQVNgZopGJy5I4jsAyTwi]'
 
 # Django Heroku
 if 'ON_HEROKU' in os.environ:
     import django_heroku
     django_heroku.settings(locals())
+    # Django Storages
+    DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+    DROPBOX_OAUTH2_TOKEN = '[qGz2n3y2sEcAAAAAAAAAAfmYFzl6Ryc-Vh_9To5mAIFSQVNgZopGJy5I4jsAyTwi]'
