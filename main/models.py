@@ -99,11 +99,12 @@ class Pedido(models.Model):
     fecha_entrega = models.DateTimeField(blank=True, null=True)
     estado = models.CharField(max_length=3)
     direccion_entrega = models.CharField(max_length=100, blank=True, null=True)
-    tarifa = models.FloatField(blank=True, null=True)
+    tarifa = models.FloatField(blank=True, null=True,default=0)
 
     def __str__(self):
         return f'{self.cliente} - {self.fecha_creacion} - {self.estado}'
 
+    @property
     def get_total(self):
         detalles = self.detallepedido_set.all()
         total = 0

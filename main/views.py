@@ -86,6 +86,16 @@ def home(request):
 class ProductListView(ListView):
     model=Producto
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Obten el cliente
+        user_profile = Profile.objects.get(user=self.request.user)
+        cliente = Cliente.objects.get(user_profile=user_profile)
+        # Obtén/Crea un/el pedido en proceso (EP) del usuario
+        pedido  = Pedido.objects.get(cliente=cliente, estado='EP')
+        context["pedido"]=pedido
+        return context
+
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query is not None:

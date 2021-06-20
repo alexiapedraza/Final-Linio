@@ -9,6 +9,7 @@
               <li> <strong>Cliente:</strong> {{ object.cliente.user_profile.user.get_username }}</li>
               <li> <strong>Fecha Creación:</strong> {{ object.fecha_creacion }}</li>
               <li> <strong>Estado:</strong> {{ object.estado }}</li>
+                <li> <strong>Subtotal:</strong> {{ object.get_total }}</li>
             </ul>
         </div>
     </div>
