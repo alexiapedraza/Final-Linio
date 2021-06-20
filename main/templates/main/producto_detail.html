@@ -29,6 +29,7 @@
       <li><strong>Categoria:</strong> {{ object.categoria.nombre }}</li>
       <li><strong>Proveedor:</strong> {{ object.proveedor }}</li>
     </ul>
+    {% if user.is_authenticated %}
     <div class="block">
       <a href="{% url 'add-to-cart' product_pk=object.pk %}" class='button is-primary'>
         Añadir al carrito
@@ -37,6 +38,13 @@
         Ver carrito
       </a>
     </div>
+    {% else %}
+    <h3> Para hacer un pedido inicia sesion o registrate </h3>
+    <p>
+      <a href="{% url 'login' %}">Inicia Sesion</a> o
+      <a href="{% url 'register' %}">Registrate</a>
+    </p>
+    {% endif %}
     <hr>
     <ul>
       <li><a href="{% url 'product-list' %}">Ver Lista de Productos</a></li>
