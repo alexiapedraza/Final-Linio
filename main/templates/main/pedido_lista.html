@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {%for pedido in pedidos%}
+    <h5>Numero del pedido: {{pedido.id}}</h5>
+    <p>Fecha de creacion: {{pedido.fecha_creacion}}</p>
+    <p>Estado: {{pedido.estado}}</p>
+    <p>Total: {{pedido.get_total}}</p>
+    <p>Tarifa delivery: {{pedido.tarifa}}</p>
+    <p><a href="{% url 'eliminar_pedido' pedido.id%}">Eliminar pedido</a></p>
+    {%endfor%}
+    <p><a href="{% url 'home'%}">Inicio</a></p>
+</body>
+</html>

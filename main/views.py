@@ -11,6 +11,8 @@ from django.views.generic import View, UpdateView
 from django.db.models import F
 from random import randint
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.template import loader
 
 from .forms import *
 
@@ -92,17 +94,21 @@ class ProductListView(ListView):
         user_profile = Profile.objects.get(user=self.request.user)
         cliente = Cliente.objects.get(user_profile=user_profile)
         # Obtén/Crea un/el pedido en proceso (EP) del usuario
-        pedido  = Pedido.objects.get(cliente=cliente, estado='EP')
+        pedido, nohay_pedido= Pedido.objects.get_or_create(cliente=cliente, estado='EP')
         context["pedido"]=pedido
+        context["Categorias"]=Categoria.objects.all()
         return context
 
     def get_queryset(self):
         query = self.request.GET.get('q')
+        query1 = self.request.GET.get('c')
+        object_list=Producto.objects.all()
         if query is not None:
-            object_list = Producto.objects.filter(nombre__icontains=query)
-            return object_list
-        else:
-            return Producto.objects.all()
+            object_list = object_list.filter(nombre__icontains=query)
+
+        if query1 is not None:
+            object_list=object_list.filter(categoria_id=query1)
+        return object_list
 
 class ProductDetailView(DetailView):
     model=Producto
@@ -115,7 +121,7 @@ class AddToCartView(View):
         # Obtén el producto que queremos añadir al carrito
         producto = Producto.objects.get(pk=product_pk)
         # Obtén/Crea un/el pedido en proceso (EP) del usuario
-        pedido, _  = Pedido.objects.get_or_create(cliente=cliente, estado='EP')
+        pedido, nohay_pedido= Pedido.objects.get_or_create(cliente=cliente, estado='EP')
         # Obtén/Crea un/el detalle de pedido
         detalle_pedido, created = DetallePedido.objects.get_or_create(
             producto=producto,
@@ -214,3 +220,21 @@ class CompletePaymentView(View):
         pedido.save()
         messages.success(request, 'Gracias por tu compra! Un repartidor ha sido asignado a tu pedido.')
         return redirect('home')
+
+@login_required
+def pedidolista(request):
+    template = loader.get_template('main/pedido_lista.html')
+    profile=Profile.objects.get(user_id=request.user.id)
+    cliente=Cliente.objects.get(user_profile_id=profile.id)
+    context = {
+        'pedidos':Pedido.objects.filter(cliente_id=cliente.id)
+    }
+    return HttpResponse(template.render(context, request))
+
+def pedido_destroy(request, id):
+    # Obtener pedido a borrar
+    pedido = Pedido.objects.get(id = id)
+    # eliminar pedido de la base de datos
+    pedido.delete()
+    # Redireccionar a la vista de pedidos
+    return redirect('pedido_lista')

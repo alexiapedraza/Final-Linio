@@ -12,4 +12,6 @@ urlpatterns=[
     path('checkout/<int:pk>', views.PedidoUpdateView.as_view(), name='pedido-update'),
     path('payment/', views.PaymentView.as_view(), name='payment'),
     path('complete_payment/', views.CompletePaymentView.as_view(), name='complete-payment'),
+    path('pedidos_lista',views.pedidolista,name='pedido_lista'),
+    path('eliminar_pedido/<int:id>',views.pedido_destroy,name='eliminar_pedido')
     ]
