@@ -110,7 +110,8 @@ class Pedido(models.Model):
         total = 0
         for detalle in detalles:
             total += detalle.get_subtotal()
-        total += self.tarifa
+        if self.tarifa is not None:
+            total += self.tarifa
         return total
     def asignar_repartidor(self):
         a=str(input("Ingrese el nombre del repartidor: "))
