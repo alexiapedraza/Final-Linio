@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <h1> LinioExp </h1>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <hr>
     <h1> Subtotal </h1>{{pedido.get_total}}
     <hr>
@@ -36,7 +37,7 @@
 </div>
     <hr>
     <ul>
-      <li> <a href="{% url 'home' %}">Inicio</a> </li>
+        <p><a href="{% url 'home'%}"><i class="fas fa-home"></i>Inicio</a></p>
     </ul>
   </body>
 </html>
