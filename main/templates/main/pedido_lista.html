@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -13,6 +14,6 @@
     <p>Tarifa delivery: {{pedido.tarifa}}</p>
     <p><a href="{% url 'eliminar_pedido' pedido.id%}">Eliminar pedido</a></p>
     {%endfor%}
-    <p><a href="{% url 'home'%}">Inicio</a></p>
+    <p><a href="{% url 'home'%}"><i class="fas fa-home"></i>Inicio</a></p>
 </body>
 </html>
