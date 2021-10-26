@@ -3,6 +3,7 @@
 {% block content %}
     {% if user.is_authenticated %}
     <h3> Hola {{ user.get_username }} </h3>
+<h3>ATENCIÓN*Página web elaborada para una demo*</h3>
     <p>
       <a href="{% url 'logout' %}">Cierra Sesion</a>
     </p>
@@ -12,6 +13,7 @@
       </a></p>
     {% else %}
     <h3> Hola </h3>
+<h3>ATENCIÓN*Página web elaborada para una demo*</h3>
     <p>
       <a href="{% url 'login' %}">Inicia Sesion</a> o
       <a href="{% url 'register' %}">Registrate</a>
