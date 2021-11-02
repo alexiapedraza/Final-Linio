@@ -1,12 +1,43 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+{% extends "base.html" %}
+{% block content %}
   <head>
     <meta charset="utf-8">
-    <title> LinioExp </title>
-      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <title> Peak It </title>
   </head>
+<style>
+h1 {
+    text-align: left;
+}
+h1 span {
+background-color: white;
+}
+body{
+background-color: white;
+}
+h3 {
+    text-align: left;
+}
+h3 span {
+background-color:white;
+}
+h5 {
+    text-align: left;
+}
+h5 span {
+background-color:white;
+}
+li {
+    text-align: left;
+}
+li span {
+background-color:white;
+}
+img {
+  width: 190px;
+}
+</style>
   <body>
-    <h1> Linio Exp </h1>
+    <h1> Peak It </h1>
     <hr>
     <h3> {{ object.nombre }} </h3>
     <div class="columns">
@@ -53,3 +84,4 @@
     </ul>
   </body>
 </html>
+{% endblock %}
